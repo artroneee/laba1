@@ -10,7 +10,7 @@
 #include <regex>
 #include <locale>
 #include <codecvt>
-
+#include <sstream>
 
 using namespace std;
 namespace fs = std::filesystem;
