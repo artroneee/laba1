@@ -38,8 +38,8 @@ bool isNameValid(const std::wstring& name) {
             return false;
         }
     }
-    std::wistringstream iss(name);
-    std::wstring word;
+    wistringstream iss(name);
+    wstring word;
     while (iss >> word) {
         if (!iswupper(word[0])) {
             return false;
@@ -54,9 +54,9 @@ bool isNameValid(const std::wstring& name) {
 }
 void count_files() {
     double total_file_count1=0;
-    std::ifstream file("C:\\Users\\Artem\\db\\db_\\folders.txt");//поменять на вашу
-    std::string folder_path;
-    while (std::getline(file, folder_path)) {
+    ifstream file("C:\\Users\\Artem\\db\\db_\\folders.txt");//поменять на вашу
+    string folder_path;
+    while (getline(file, folder_path)) {
         int file_count = 0;
 
         for (auto& file : fs::directory_iterator(folder_path)) {
@@ -65,17 +65,17 @@ void count_files() {
             }
         }
 
-        std::cout << "Папка " << folder_path << " содержит " << file_count << " файлов." << std::endl;
+        cout << "Папка " << folder_path << " содержит " << file_count << " файлов." << endl;
         total_file_count1 += file_count;
     }
 
-    std::cout << "Всего просматриваемых файлов: " << total_file_count1 << std::endl;
+    cout << "Всего просматриваемых файлов: " << total_file_count1 << endl;
     file.close();
 }
 void percent() {
 
-    std::ifstream file("C:\\Users\\Artem\\db\\db_\\folders.txt");//поменять на вашу
-    std::string folder_path;
+    ifstream file("C:\\Users\\Artem\\db\\db_\\folders.txt");//поменять на вашу
+    string folder_path;
     while (std::getline(file, folder_path)) {
         int file_count = 0;
 
@@ -93,7 +93,7 @@ void percent() {
     percentt = 0, temp_percent = 0, total_file_count = 0;
     file.close();
 }
-void search_login(const std::string& login_temp, const std::string& mail_temp, const std::string& phone_temp, const fs::path& folder_paths) {
+void search_login(const string& login_temp, const string& mail_temp, const string& phone_temp, const fs::path& folder_paths) {
 
 
     if (login_str == "" && mail == "" && phone == "") {
@@ -106,24 +106,24 @@ void search_login(const std::string& login_temp, const std::string& mail_temp, c
 
         for (const auto &file: fs::directory_iterator(folder_paths)) {
             if (file.is_regular_file() && file.path().extension() == ".csv") {
-                std::ifstream input(file.path());
-                std::string line;
+                ifstream input(file.path());
+                string line;
                 int line_number = 1;
 
                 input.clear();
                 input.seekg(0);
 
 
-                while (std::getline(input, line)) {
+                while (getline(input, line)) {
                     //cout <<"строка файла"<< line << endl;
                     //cout <<"переменная"<< login_temp << endl;
                     //cout << (line.find(login_temp) != std::string::npos);
                     //cout << (line.find(mail_temp) != std::string::npos);
                     //cout << (line.find(phone_temp) != std::string::npos);
-                    if (line.find(login_temp) != std::string::npos && line.find(mail_temp) != std::string::npos &&
+                    if (line.find(login_temp) != std::string::npos && line.find(mail_temp) != string::npos &&
                         line.find(phone_temp) != std::string::npos) {
-                        std::cout << "Данные найдены в файле " << file.path() << ", строка " << line_number << ": "
-                                  << line << std::endl;
+                        cout << "Данные найдены в файле " << file.path() << ", строка " << line_number << ": "
+                                  << line << endl;
 
                     }
                     line_number++;
@@ -140,28 +140,28 @@ void remove_folder() {
     string full_path = path_folder_for_txt + "\\" + file_name;
     string tmp_path = path_folder_for_txt + "\\temporary.tmp";//и это
 
-    std::ifstream input_file(full_path);
+    ifstream input_file(full_path);
 
     if (!input_file.is_open()) {
-        std::cerr << "Не удалось открыть файл!\n" << full_path << std::endl;
+        cerr << "Не удалось открыть файл!\n" << full_path << endl;
         managment();
     }
 
-    std::string search_string;
-    std::cout << "Введите путь до папки в формате path/to/folder для удаления: \n";
+    string search_string;
+    cout << "Введите путь до папки в формате path/to/folder для удаления: \n";
     cin >> search_string;
 
-    std::string line;
-    std::ofstream output_file(tmp_path);
+    string line;
+    ofstream output_file(tmp_path);
 
-    while (std::getline(input_file, line)) {
+    while (getline(input_file, line)) {
         if (line != search_string) {
-            output_file << line << std::endl;
+            output_file << line << endl;
         }
     }
     input_file.close();
     output_file.close();
-    if (std::remove(full_path.c_str()) != 0) {
+    if (remove(full_path.c_str()) != 0) {
         cout << "Не удалось удалить файл!\n" << full_path;
         managment();
     }
@@ -169,7 +169,7 @@ void remove_folder() {
         cout << "Не удалось переименовать файл!\n";
         managment();
     }
-    std::cout << "Путь успешно удален!\n";
+    cout << "Путь успешно удален!\n";
 
     managment();
 }
@@ -321,8 +321,8 @@ void search() {
             cout << "Введите почту для поиска в формате example@test.ru:\n";
             while (true) {
                 cin >> mail;
-                if (std::regex_match(mail, pattern)) {
-                    std::cout << "Почта успешно введена!\n";
+                if (regex_match(mail, pattern)) {
+                    cout << "Почта успешно введена!\n";
                     break;
                 }
                 else {
@@ -354,7 +354,7 @@ void search() {
             count_files();
             percent();
 
-            while (std::getline(input, folder_path_str)) { // читаем файл построчно
+            while (getline(input, folder_path_str)) { // читаем файл построчно
                 const fs::path folder_paths(folder_path_str);
 
                 search_login(login_str, mail, phone, folder_paths);// передаем логин и путь к папке в функцию поиска
